@@ -1,0 +1,27 @@
+services:
+  back:
+    build:
+      context: ./back
+      dockerfile: Dockerfile
+    image: docker-compose-test-back:local
+    container_name: docker-compose-test-back
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  front:
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    image: docker-compose-test-front:local
+    container_name: docker-compose-test-front
+    ports:
+      - "8080:80"
+    depends_on:
+      back:
+        condition: service_healthy
+
