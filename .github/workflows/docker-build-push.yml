@@ -64,7 +64,7 @@ jobs:
           pip install pytest
 
       - name: Lancer les tests unitaires back
-        run: pytest
+        run: PYTHONPATH=. pytest
 
   lint:
     name: Lint front et back
