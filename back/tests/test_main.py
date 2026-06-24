@@ -13,8 +13,14 @@ def test_health_returns_ok():
     assert response.json() == {"status": "ok"}
 
 
-def test_message_returns_expected_message():
+def test_message_returns_expected_message_and_instance():
     response = client.get("/api/message")
 
     assert response.status_code == 200
-    assert response.json() == {"message": "Bonjour depuis le back FastAPI"}
+
+    data = response.json()
+
+    assert data["message"] == "Bonjour depuis le back FastAPI"
+    assert "instance" in data
+    assert isinstance(data["instance"], str)
+    assert len(data["instance"]) > 0

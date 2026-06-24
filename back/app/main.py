@@ -1,3 +1,5 @@
+import socket
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -19,5 +21,7 @@ def health():
 
 @app.get("/api/message")
 def message():
-    return {"message": "Bonjour depuis le back FastAPI"}
-
+    return {
+        "message": "Bonjour depuis le back FastAPI",
+        "instance": socket.gethostname(),
+    }

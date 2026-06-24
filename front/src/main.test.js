@@ -8,7 +8,7 @@ describe('main.js', () => {
     document.body.innerHTML = '<div id="message"></div>';
   });
 
-  test('affiche le message reçu depuis le back', async () => {
+  test('affiche le message reçu depuis le back avec l’instance', async () => {
     vi.stubGlobal(
       'fetch',
       vi.fn(() =>
@@ -16,6 +16,7 @@ describe('main.js', () => {
           json: () =>
             Promise.resolve({
               message: 'Bonjour depuis le back FastAPI',
+              instance: 'back-instance-1',
             }),
         })
       )
@@ -25,7 +26,7 @@ describe('main.js', () => {
 
     await vi.waitFor(() => {
       expect(document.querySelector('#message').textContent).toBe(
-        'Bonjour depuis le back FastAPI'
+        'Bonjour depuis le back FastAPI - instance : back-instance-1'
       );
     });
   });
